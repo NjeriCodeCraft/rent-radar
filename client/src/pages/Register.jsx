@@ -19,6 +19,8 @@ const Register = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F5F8FA] font-sans" style={{ fontFamily: 'Inter, Poppins, Rubik, sans-serif' }}>
       <div className="bg-white rounded-lg shadow-md p-10 w-full max-w-md" style={{ borderRadius: '12px' }}>
@@ -30,7 +32,7 @@ const Register = () => {
             setError(null);
             setLoading(true);
             try {
-              const res = await axios.post('/api/auth/register', {
+              const res = await axios.post(`${API_BASE_URL}/api/auth/register`, {
                 name: values.name,
                 email: values.email,
                 phone: values.phone,

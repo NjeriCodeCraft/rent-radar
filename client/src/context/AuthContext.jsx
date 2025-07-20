@@ -3,6 +3,8 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       setAuthToken(token);
       try {
-        const res = await axios.get('/api/auth/me');
+        const res = await axios.get(`${API_BASE_URL}/api/auth/me`);
         setUser(res.data.user);
       } catch {
         setUser(null);
@@ -42,7 +44,7 @@ export const AuthProvider = ({ children }) => {
 
   // Login
   const login = async (emailOrPhone, password) => {
-    const res = await axios.post('/api/auth/login', { emailOrPhone, password });
+    const res = await axios.post(`${API_BASE_URL}/api/auth/login`, { emailOrPhone, password });
     localStorage.setItem('token', res.data.token);
     setAuthToken(res.data.token);
     setUser(res.data.user);
@@ -50,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   // Register
   const register = async (name, email, phone, password) => {
-    const res = await axios.post('/api/auth/register', { name, email, phone, password });
+    const res = await axios.post(`${API_BASE_URL}/api/auth/register`, { name, email, phone, password });
     localStorage.setItem('token', res.data.token);
     setAuthToken(res.data.token);
     setUser(res.data.user);
