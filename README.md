@@ -11,6 +11,8 @@ A comprehensive rental platform that helps budget-conscious tenants find their p
 ## 🚀 Project Overview
 RentRadar is a full-stack web app for discovering, booking, and managing rental properties in Kenya. It features smart search, interactive maps, agent and booking systems, reviews, notifications, and more.
 
+**Live Demo:** [https://rentradar254.netlify.app/](https://rentradar254.netlify.app/)
+
 **Tech Stack:**
 - **Frontend:** React, Tailwind CSS, Vite, Google Maps API, Formik, Yup, Axios
 - **Backend:** Express.js, Node.js, MongoDB, JWT, Multer
