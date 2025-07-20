@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,10 +13,10 @@ const Leaderboard = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get('/api/users/leaderboard');
+        const res = await axios.get(`${API_BASE_URL}/api/users/leaderboard`);
         setLeaders(res.data.leaderboard || []);
       } catch (err) {
-        setError('Failed to load leaderboard');
+        setError('Failed to load leaderboard.');
       }
       setLoading(false);
     };

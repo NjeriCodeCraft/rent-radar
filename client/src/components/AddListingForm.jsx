@@ -3,6 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const AddListingSchema = Yup.object().shape({
   title: Yup.string().min(10, 'Title must be at least 10 characters').required('Title is required'),
   description: Yup.string().min(50, 'Description must be at least 50 characters').required('Description is required'),
@@ -62,7 +64,7 @@ const AddListingForm = ({ onSuccess, onCancel }) => {
     try {
       const formData = new FormData();
       imageFiles.forEach(f => formData.append('images', f));
-      const res = await axios.post('/api/listings/upload', formData, {
+      const res = await axios.post(`${API_BASE_URL}/api/listings/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setUploading(false);
@@ -108,7 +110,7 @@ const AddListingForm = ({ onSuccess, onCancel }) => {
             }
           }
           try {
-            await axios.post('/api/listings', {
+            await axios.post(`${API_BASE_URL}/api/listings`, {
               ...values,
               images: imageUrls.map(url => ({ url })),
             });

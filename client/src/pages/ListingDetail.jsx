@@ -7,6 +7,8 @@ import axios from 'axios';
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const amenityIcons = {
   water: '💧',
   electricity: '⚡',
@@ -106,7 +108,7 @@ const ListingDetail = () => {
     if (!id) return;
     const fetchReviews = async () => {
       try {
-        const res = await axios.get(`/api/listings/${id}/reviews`);
+        const res = await axios.get(`${API_BASE_URL}/api/listings/${id}/reviews`);
         setReviews(res.data.reviews || []);
         setAvgRating(res.data.avgRating);
         setReviewCount(res.data.count);
@@ -147,7 +149,7 @@ const ListingDetail = () => {
     if (!isAuthenticated) return;
     setSaving(true);
     try {
-      await axios.post(`/api/users/favorites/${id}`);
+      await axios.post(`${API_BASE_URL}/api/users/favorites/${id}`);
       reloadUser();
     } catch {}
     setSaving(false);
@@ -160,7 +162,7 @@ const ListingDetail = () => {
     setBookingError(null);
     setBookingSuccess(null);
     try {
-      await axios.post('/api/bookings', {
+      await axios.post(`${API_BASE_URL}/api/bookings`, {
         listingId: listing._id,
         agentId: listing.contactInfo?.agentId,
         appointmentDate: bookingForm.date,
@@ -335,11 +337,11 @@ const ListingDetail = () => {
               setReviewSuccess(null);
               setSubmittingReview(true);
               try {
-                await axios.post(`/api/listings/${id}/reviews`, reviewForm);
+                await axios.post(`${API_BASE_URL}/api/listings/${id}/reviews`, reviewForm);
                 setReviewSuccess('Review submitted!');
                 setReviewForm({ rating: '', comment: '' });
                 // Refresh reviews
-                const res = await axios.get(`/api/listings/${id}/reviews`);
+                const res = await axios.get(`${API_BASE_URL}/api/listings/${id}/reviews`);
                 setReviews(res.data.reviews || []);
                 setAvgRating(res.data.avgRating);
                 setReviewCount(res.data.count);

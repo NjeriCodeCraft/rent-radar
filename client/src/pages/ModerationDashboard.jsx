@@ -22,6 +22,8 @@ const ModerationDashboard = () => {
     return <div className="max-w-2xl mx-auto py-16 text-center text-red-600 font-bold">Access denied: Moderation is for admins/agents only.</div>;
   }
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const fetchContributions = async () => {
     setLoading(true);
     setError(null);
@@ -29,7 +31,7 @@ const ModerationDashboard = () => {
       const params = {};
       if (typeFilters.length > 0) params.type = typeFilters;
       if (statusFilters.length > 0) params.status = statusFilters;
-      const res = await axios.get('/api/contributions', { params });
+      const res = await axios.get(`${API_BASE_URL}/api/contributions`, { params });
       let filtered = res.data.contributions || [];
       // Search filter (by description, area, contributor name)
       if (search) {
@@ -55,7 +57,7 @@ const ModerationDashboard = () => {
 
   const handleApprove = async (id) => {
     try {
-      await axios.put(`/api/contributions/${id}/verify`, { status: 'verified' });
+      await axios.put(`${API_BASE_URL}/api/contributions/${id}/verify`, { status: 'verified' });
       fetchContributions();
     } catch {
       alert('Failed to approve');
@@ -63,7 +65,7 @@ const ModerationDashboard = () => {
   };
   const handleReject = async (id) => {
     try {
-      await axios.put(`/api/contributions/${id}/verify`, { status: 'rejected' });
+      await axios.put(`${API_BASE_URL}/api/contributions/${id}/verify`, { status: 'rejected' });
       fetchContributions();
     } catch {
       alert('Failed to reject');

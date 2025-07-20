@@ -6,6 +6,8 @@ import ListingCard from '../components/ListingCard';
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Profile = () => {
   const { user, isAuthenticated, reloadUser } = useAuth();
   const [profile, setProfile] = useState(null);
@@ -46,7 +48,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('/api/users/me');
+        const res = await axios.get(`${API_BASE_URL}/api/users/me`);
         setProfile(res.data.user);
         setFavorites(res.data.favorites || []);
         setForm({ name: res.data.user.name, phone: res.data.user.phone });
@@ -72,7 +74,7 @@ const Profile = () => {
     setSaving(true);
     setError(null);
     try {
-      await axios.put('/api/users/me', form);
+      await axios.put(`${API_BASE_URL}/api/users/me`, form);
       setProfile({ ...profile, ...form });
       setEditMode(false);
       reloadUser();
@@ -85,7 +87,7 @@ const Profile = () => {
 
   const handleRemoveFavorite = async (listingId) => {
     try {
-      await axios.post(`/api/users/favorites/${listingId}`);
+      await axios.post(`${API_BASE_URL}/api/users/favorites/${listingId}`);
       setFavorites(favorites.filter(l => l._id !== listingId));
       reloadUser();
     } catch (err) {
@@ -104,7 +106,7 @@ const Profile = () => {
     }
     setPwLoading(true);
     try {
-      await axios.put('/api/users/change-password', {
+      await axios.put(`${API_BASE_URL}/api/users/change-password`, {
         oldPassword: pwForm.oldPassword,
         newPassword: pwForm.newPassword,
       });
@@ -125,7 +127,7 @@ const Profile = () => {
     setNpError(null);
     setNpSuccess(null);
     try {
-      await axios.put('/api/users/notification-preferences', notificationPrefs);
+      await axios.put(`${API_BASE_URL}/api/users/notification-preferences`, notificationPrefs);
       setNpSuccess('Preferences updated!');
     } catch (err) {
       setNpError('Failed to update preferences');
@@ -148,7 +150,7 @@ const Profile = () => {
     try {
       const formData = new FormData();
       formData.append('avatar', avatar);
-      const res = await axios.post('/api/users/upload-avatar', formData, {
+      const res = await axios.post(`${API_BASE_URL}/api/users/upload-avatar`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setProfile({ ...profile, profile: { ...profile.profile, avatar: res.data.avatar } });

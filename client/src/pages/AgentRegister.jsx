@@ -4,6 +4,8 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const AgentRegisterSchema = Yup.object().shape({
   bio: Yup.string().min(50, 'Bio must be at least 50 characters').required('Bio is required'),
   experience: Yup.number().min(0, 'Experience must be positive').required('Experience is required'),
@@ -72,7 +74,7 @@ const AgentRegister = () => {
             setError(null);
             setLoading(true);
             try {
-              await axios.post('/api/agents/register', values);
+              await axios.post(`${API_BASE_URL}/api/agents/register`, values);
               setLoading(false);
               navigate('/agent/dashboard');
             } catch (err) {

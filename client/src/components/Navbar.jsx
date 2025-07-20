@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ const Navbar = () => {
     if (!isAuthenticated) return;
     const fetchNotifications = async () => {
       try {
-        const res = await axios.get('/api/users/notifications?read=false&channel=in-app');
+        const res = await axios.get(`${API_BASE_URL}/api/users/notifications?read=false&channel=in-app`);
         setNotifications(res.data.notifications || []);
         setUnreadCount((res.data.notifications || []).filter(n => !n.read).length);
       } catch {}
@@ -38,7 +40,7 @@ const Navbar = () => {
 
   const handleMarkAsRead = async (id) => {
     try {
-      await axios.put(`/api/users/notifications/${id}/read`);
+      await axios.put(`${API_BASE_URL}/api/users/notifications/${id}/read`);
       setNotifications(notifications.map(n => n._id === id ? { ...n, read: true } : n));
       setUnreadCount(unreadCount - 1);
     } catch {}

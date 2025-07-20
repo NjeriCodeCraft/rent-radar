@@ -10,6 +10,8 @@ import shopIcon from '../assets/shop-pin.png';
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const landmarkTypes = [
   { type: 'school', icon: schoolIcon },
   { type: 'hospital', icon: hospitalIcon },
@@ -66,16 +68,16 @@ const MapView = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get('/api/listings');
+        const res = await axios.get(`${API_BASE_URL}/api/listings`);
         setListings(res.data.listings || []);
       } catch (err) {
-        setError('Failed to load listings');
+        setError('Failed to load listings.');
       }
       setLoading(false);
     };
     const fetchContributions = async () => {
       try {
-        const res = await axios.get('/api/contributions');
+        const res = await axios.get(`${API_BASE_URL}/api/contributions`);
         setContributions(res.data.contributions || []);
       } catch (err) {
         // Optionally handle error

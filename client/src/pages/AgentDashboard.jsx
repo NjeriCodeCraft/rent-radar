@@ -6,6 +6,8 @@ import AddListingForm from '../components/AddListingForm';
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const AgentDashboard = () => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -47,9 +49,9 @@ const AgentDashboard = () => {
   const loadAgentData = async () => {
     try {
       const [profileRes, listingsRes, bookingsRes] = await Promise.all([
-        axios.get('/api/agents/profile'),
-        axios.get('/api/agents/listings'),
-        axios.get('/api/bookings')
+        axios.get(`${API_BASE_URL}/api/agents/profile`),
+        axios.get(`${API_BASE_URL}/api/agents/listings`),
+        axios.get(`${API_BASE_URL}/api/bookings`)
       ]);
       setAgentProfile(profileRes.data.agent);
       setListings(listingsRes.data.listings);
@@ -66,7 +68,7 @@ const AgentDashboard = () => {
     if (!agentProfile?._id) return;
     const fetchReviews = async () => {
       try {
-        const res = await axios.get(`/api/agents/${agentProfile._id}/reviews`);
+        const res = await axios.get(`${API_BASE_URL}/api/agents/${agentProfile._id}/reviews`);
         setReviews(res.data.reviews || []);
         setAvgRating(res.data.avgRating);
         setReviewCount(res.data.count);
@@ -84,9 +86,9 @@ const AgentDashboard = () => {
     setBookingsLoading(true);
     setBookingsError(null);
     try {
-      await axios.put(`/api/bookings/${id}`, { status });
+      await axios.put(`${API_BASE_URL}/api/bookings/${id}`, { status });
       // Refresh bookings
-      const res = await axios.get('/api/bookings');
+      const res = await axios.get(`${API_BASE_URL}/api/bookings`);
       setBookings(res.data.bookings || []);
     } catch (err) {
       setBookingsError('Failed to update booking');
@@ -251,11 +253,11 @@ const AgentDashboard = () => {
                           setReviewSuccess(null);
                           setSubmittingReview(true);
                           try {
-                            await axios.post(`/api/agents/${agentProfile._id}/reviews`, reviewForm);
+                            await axios.post(`${API_BASE_URL}/api/agents/${agentProfile._id}/reviews`, reviewForm);
                             setReviewSuccess('Review submitted!');
                             setReviewForm({ rating: '', comment: '' });
                             // Refresh reviews
-                            const res = await axios.get(`/api/agents/${agentProfile._id}/reviews`);
+                            const res = await axios.get(`${API_BASE_URL}/api/agents/${agentProfile._id}/reviews`);
                             setReviews(res.data.reviews || []);
                             setAvgRating(res.data.avgRating);
                             setReviewCount(res.data.count);
@@ -329,12 +331,12 @@ const AgentDashboard = () => {
                                     setReplySuccess(null);
                                     setSubmittingReply(true);
                                     try {
-                                      await axios.put(`/api/agents/reviews/${r._id}/reply`, { text: replyText });
+                                      await axios.put(`${API_BASE_URL}/api/agents/reviews/${r._id}/reply`, { text: replyText });
                                       setReplySuccess('Reply posted!');
                                       setReplyText('');
                                       setReplyingTo(null);
                                       // Refresh reviews
-                                      const res = await axios.get(`/api/agents/${agentProfile._id}/reviews`);
+                                      const res = await axios.get(`${API_BASE_URL}/api/agents/${agentProfile._id}/reviews`);
                                       setReviews(res.data.reviews || []);
                                       setAvgRating(res.data.avgRating);
                                       setReviewCount(res.data.count);

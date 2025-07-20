@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const MyBookings = () => {
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ const MyBookings = () => {
     setPayStatus(null);
     setPayError(null);
     try {
-      await axios.post('/api/payments/mpesa', { bookingId, phone: mpesaPhone });
+      await axios.post(`${API_BASE_URL}/api/payments/mpesa`, { bookingId, phone: mpesaPhone });
       setPayStatus('M-PESA payment initiated! (simulated)');
     } catch (err) {
       setPayError('Failed to initiate M-PESA payment');
@@ -34,7 +36,7 @@ const MyBookings = () => {
     setPayStatus(null);
     setPayError(null);
     try {
-      await axios.post('/api/payments/bank-proof', { bookingId, reference: bankRef });
+      await axios.post(`${API_BASE_URL}/api/payments/bank-proof`, { bookingId, reference: bankRef });
       setPayStatus('Bank payment proof submitted! (simulated)');
     } catch (err) {
       setPayError('Failed to submit bank payment proof');
@@ -51,7 +53,7 @@ const MyBookings = () => {
     const fetchBookings = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('/api/bookings');
+        const res = await axios.get(`${API_BASE_URL}/api/bookings`);
         setBookings(res.data.bookings || []);
       } catch (err) {
         setError('Failed to load bookings');

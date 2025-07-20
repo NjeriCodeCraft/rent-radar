@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Contribute = () => {
   const [type, setType] = useState('photo');
   const [media, setMedia] = useState(null);
@@ -50,7 +52,7 @@ const Contribute = () => {
       formData.append('address', address);
       formData.append('area', area);
       formData.append('description', description);
-      await axios.post('/api/contributions', formData, {
+      await axios.post(`${API_BASE_URL}/api/contributions`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setSuccess('Contribution submitted! Thank you for helping the community.');
