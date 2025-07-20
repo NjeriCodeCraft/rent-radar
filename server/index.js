@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path');
 
 const app = express();
 
@@ -9,6 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/rent-radar', {
@@ -22,9 +24,24 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/rent-rada
 const listingsRouter = require('./routes/listings');
 const authRouter = require('./routes/auth');
 const agentsRouter = require('./routes/agents');
+const usersRouter = require('./routes/users');
+const bookingsRouter = require('./routes/bookings');
+const paymentsRouter = require('./routes/payments');
+const contributionsRouter = require('./routes/contributions');
+console.log("Registering /api/listings");
 app.use('/api/listings', listingsRouter);
+console.log("Registering /api/auth");
 app.use('/api/auth', authRouter);
+console.log("Registering /api/agents");
 app.use('/api/agents', agentsRouter);
+console.log("Registering /api/users");
+app.use('/api/users', usersRouter);
+console.log("Registering /api/bookings");
+app.use('/api/bookings', bookingsRouter);
+console.log("Registering /api/payments");
+app.use('/api/payments', paymentsRouter);
+console.log("Registering /api/contributions");
+app.use('/api/contributions', contributionsRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

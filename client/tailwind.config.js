@@ -7,18 +7,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+        background: '#f5f6fa', // soft gray
+        card: '#ffffff', // clean white
+        accent: {
+          500: '#ff6f61', // vibrant coral
         },
+        blue: {
+          DEFAULT: '#19376d', // deep blue
+          hover: '#0b2447',   // blue on hover
+        },
+        heading: '#1a2238', // bold, dark for headings
+        text: {
+          main: '#111827', // Main text
+          subtle: '#6B7280', // Cool gray
+        },
+        hover: {
+          blue: '#2563EB', // Blue on hover
+          coral: '#FF6F61', // Coral on hover
+        },
+        danger: '#EF4444', // Red for danger
+      },
+      fontFamily: {
+        sans: ['ui-sans-serif', 'system-ui'],
       },
     },
   },

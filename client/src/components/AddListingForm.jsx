@@ -44,6 +44,35 @@ const amenitiesOptions = [
 const AddListingForm = ({ onSuccess, onCancel }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files).slice(0, 6);
+    setImageFiles(files);
+    setImagePreviews(files.map(f => URL.createObjectURL(f)));
+  };
+
+  const handleUploadImages = async () => {
+    if (imageFiles.length === 0) return [];
+    setUploading(true);
+    setUploadError(null);
+    try {
+      const formData = new FormData();
+      imageFiles.forEach(f => formData.append('images', f));
+      const res = await axios.post('/api/listings/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setUploading(false);
+      return res.data.urls;
+    } catch (err) {
+      setUploadError('Failed to upload images');
+      setUploading(false);
+      return [];
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
@@ -70,10 +99,23 @@ const AddListingForm = ({ onSuccess, onCancel }) => {
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           setError(null);
           setLoading(true);
+          let imageUrls = [];
+          if (imageFiles.length > 0) {
+            imageUrls = await handleUploadImages();
+            if (uploadError) {
+              setLoading(false);
+              return;
+            }
+          }
           try {
-            await axios.post('/api/listings', values);
+            await axios.post('/api/listings', {
+              ...values,
+              images: imageUrls.map(url => ({ url })),
+            });
             setLoading(false);
             resetForm();
+            setImageFiles([]);
+            setImagePreviews([]);
             if (onSuccess) onSuccess();
           } catch (err) {
             setError(err.response?.data?.message || 'Failed to create listing');
@@ -179,13 +221,24 @@ const AddListingForm = ({ onSuccess, onCancel }) => {
               {errors.amenities && touched.amenities && <div className="text-xs text-red-500 mt-1">{errors.amenities}</div>}
             </div>
 
+            <div>
+              <label className="block text-sm font-medium mb-2">Images (up to 6)</label>
+              <input type="file" accept="image/*" multiple onChange={handleImageChange} />
+              <div className="flex gap-2 mt-2">
+                {imagePreviews.map((src, i) => (
+                  <img key={i} src={src} alt="preview" className="h-20 w-28 object-cover rounded" />
+                ))}
+              </div>
+              {uploadError && <div className="text-red-600 text-sm">{uploadError}</div>}
+            </div>
+
             {error && <div className="text-red-600 text-sm text-center">{error}</div>}
             
             <div className="flex space-x-4">
               <button
                 type="submit"
                 className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded shadow"
-                disabled={loading}
+                disabled={loading || uploading}
               >
                 {loading ? 'Creating Listing...' : 'Create Listing'}
               </button>

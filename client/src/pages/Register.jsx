@@ -20,9 +20,9 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="bg-white rounded-lg shadow p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-primary-700 mb-6 text-center">Create Your Account</h2>
+    <div className="min-h-screen flex items-center justify-center bg-[#F5F8FA] font-sans" style={{ fontFamily: 'Inter, Poppins, Rubik, sans-serif' }}>
+      <div className="bg-white rounded-lg shadow-md p-10 w-full max-w-md" style={{ borderRadius: '12px' }}>
+        <h2 className="text-3xl font-bold mb-6" style={{ color: '#1A73E8' }}>Register</h2>
         <Formik
           initialValues={{ name: '', email: '', phone: '', password: '', confirmPassword: '' }}
           validationSchema={RegisterSchema}
@@ -73,17 +73,17 @@ const Register = () => {
                 <Field name="confirmPassword" type="password" className="mt-1 block w-full rounded border-gray-300" />
                 {errors.confirmPassword && touched.confirmPassword && <div className="text-xs text-red-500">{errors.confirmPassword}</div>}
               </div>
-              {error && <div className="text-red-600 text-sm text-center">{error}</div>}
+              {error && <p className="text-[#FF6B6B] mt-2">{error}</p>}
               <button
                 type="submit"
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded shadow"
+                className="bg-[#FF6B6B] hover:bg-[#FF4D4D] text-white w-full py-3 mt-4 rounded-md shadow-md font-semibold transition-all duration-300"
                 disabled={isSubmitting || loading}
               >
                 {loading ? 'Registering...' : 'Register'}
               </button>
-              <div className="text-center text-sm mt-2">
+              <div className="text-center text-sm mt-2 text-[#5F6C7B]">
                 Already have an account?{' '}
-                <Link to="/login" className="text-primary-600 hover:underline">Login</Link>
+                <Link to="/login" className="text-[#1A73E8] hover:underline">Login</Link>
               </div>
             </Form>
           )}

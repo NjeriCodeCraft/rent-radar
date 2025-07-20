@@ -4,6 +4,9 @@ import ListingCard from '../components/ListingCard';
 import { getListings } from '../services/listings';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../components/Spinner';
+import ErrorMessage from '../components/ErrorMessage';
+import { toast } from 'react-toastify';
 
 const PAGE_SIZE = 6;
 
@@ -39,6 +42,7 @@ const Home = () => {
       setTotalPages(listingsData.pagination?.total || 1);
     } catch (err) {
       setError('Failed to fetch listings.');
+      toast.error('Failed to fetch listings.');
       setResults([]);
       setTotalPages(1);
     } finally {
@@ -58,6 +62,7 @@ const Home = () => {
       setTotalPages(listingsData.pagination?.total || 1);
     } catch (err) {
       setError('Failed to fetch more listings.');
+      toast.error('Failed to fetch more listings.');
     } finally {
       setLoadingMore(false);
     }
@@ -79,21 +84,21 @@ const Home = () => {
   }, [searched, page, totalPages, loadMore]);
 
   if (authLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return <Spinner />;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50" ref={containerRef}>
-      <div className="max-w-4xl mx-auto py-8 px-4">
-        <h1 className="text-3xl font-bold text-primary-700 mb-4 text-center">Find Your Next Home</h1>
+    <div className="min-h-screen bg-[#F5F8FA] text-[#2D2D2D] flex flex-col items-center justify-center font-sans" style={{ fontFamily: 'Inter, Poppins, Rubik, sans-serif' }}>
+      <div className="max-w-2xl w-full">
+        <h1 className="text-4xl font-bold mb-4 text-center" style={{ color: '#1A73E8' }}>Find Your Next Home</h1>
         <SearchForm onSearch={handleSearch} />
-        {loading && <div className="text-center py-8">Loading...</div>}
-        {error && <div className="text-center text-red-500 py-8">{error}</div>}
+        {loading && <Spinner />}
+        {error && <ErrorMessage message={error} />}
         {searched && !loading && !error && (
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Search Results</h2>
+            <h2 className="text-xl font-semibold mb-4" style={{ color: '#1A73E8' }}>Search Results</h2>
             {results.length === 0 ? (
-              <div className="text-gray-500">No listings found. Try different filters.</div>
+              <div className="text-[#5F6C7B]">No listings found. Try different filters.</div>
             ) : (
               <>
                 <div className="grid gap-6 md:grid-cols-2">
@@ -101,15 +106,21 @@ const Home = () => {
                     <ListingCard key={listing._id} listing={listing} />
                   ))}
                 </div>
-                {loadingMore && (
-                  <div className="text-center py-4 text-primary-600 font-semibold">Loading more...</div>
-                )}
+                {loadingMore && <Spinner />}
                 {page >= totalPages && results.length > 0 && (
-                  <div className="text-center py-4 text-gray-500">End of results.</div>
+                  <div className="text-center py-4 text-[#5F6C7B]">End of results.</div>
                 )}
               </>
             )}
           </div>
+        )}
+        {!isAuthenticated && (
+          <button
+            className="bg-accent-500 text-white px-8 py-3 mt-6 w-full rounded hover:bg-blue transition"
+            onClick={() => navigate('/register')}
+          >
+            Get Started
+          </button>
         )}
       </div>
     </div>

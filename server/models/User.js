@@ -79,6 +79,11 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  // Rewards points for contributions
+  points: {
+    type: Number,
+    default: 0
+  },
   // Premium subscription
   subscription: {
     type: {
@@ -102,7 +107,12 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  lastLogin: Date
+  lastLogin: Date,
+  notificationPreferences: {
+    email: { type: Boolean, default: true },
+    sms: { type: Boolean, default: false },
+    whatsapp: { type: Boolean, default: false }
+  }
 });
 
 // Hash password before saving

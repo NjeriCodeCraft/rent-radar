@@ -1,132 +1,28 @@
 # 🏠 RentRadar - Smart Rental Finder
 
-A comprehensive rental platform that helps budget-conscious tenants find their perfect home with smart filtering, location-based search, and premium viewing services.
+> **Copyright © Faith Wanjiru 2025. All rights reserved.**
+> 
+> This project is proprietary and not open source. Do not copy, use, or redistribute any part of this codebase without explicit permission from the author. For collaboration or usage rights, contact me (see below). See LICENSE for details.
 
-## 🎯 Problem It Solves
+A comprehensive rental platform that helps budget-conscious tenants find their perfect home with smart filtering, location-based search, agent services, and more.
 
-Finding affordable housing is challenging due to:
-- Scattered listings across multiple platforms
-- Unreliable landlords and vague information
-- No proper filtering by budget and amenities
-- Wasted trips to unsuitable properties
-- Lack of trusted local guides
+---
 
-## ✨ Key Features
+## 🚀 Project Overview
+RentRadar is a full-stack web app for discovering, booking, and managing rental properties in Kenya. It features smart search, interactive maps, agent and booking systems, reviews, notifications, and more.
 
-### Core Features
-- **Smart Search**: Filter by location, budget, and amenities
-- **Visual Listings**: Real photos with detailed property information
-- **Location Services**: Google Maps integration for directions
-- **Contact System**: Direct communication with landlords
-- **User Authentication**: Secure user accounts and preferences
+**Tech Stack:**
+- **Frontend:** React, Tailwind CSS, Vite, Google Maps API, Formik, Yup, Axios
+- **Backend:** Express.js, Node.js, MongoDB, JWT, Multer
 
-### Premium Features (Future)
-- **Local Guides**: Book trusted agents to view properties
-- **Payment Integration**: M-PESA and card payments
-- **Agent Dashboard**: Manage viewing requests and payments
-- **Reviews & Ratings**: Rate landlords and properties
-
-## 🏗️ Tech Stack
-
-### Frontend
-- **React.js** + **Tailwind CSS** - Modern, responsive UI
-- **Google Maps API** - Location services and directions
-- **Formik + Yup** - Form handling and validation
-- **Axios** - API communication
-
-### Backend
-- **Express.js** + **Node.js** - RESTful API
-- **MongoDB** - Database with GeoJSON for location filtering
-- **JWT** - Authentication
-- **Multer/Cloudinary** - Image upload and storage
-
-## 📁 Project Structure
-
-```
-rent-radar/
-├── client/                 # Frontend (React + Tailwind)
-│   ├── public/
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── SearchForm.jsx
-│   │   │   ├── ListingCard.jsx
-│   │   │   ├── Map.jsx
-│   │   │   └── Auth/
-│   │   ├── pages/          # Page components
-│   │   │   ├── Home.jsx
-│   │   │   ├── Search.jsx
-│   │   │   ├── ListingDetail.jsx
-│   │   │   ├── Login.jsx
-│   │   │   └── Dashboard.jsx
-│   │   ├── services/       # API services
-│   │   ├── utils/          # Helper functions
-│   │   ├── context/        # React context
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── tailwind.config.js
-│   ├── package.json
-│   └── vite.config.js
-├── server/                 # Backend (Express + MongoDB)
-│   ├── models/             # Database models
-│   │   ├── Listing.js
-│   │   ├── User.js
-│   │   ├── Agent.js
-│   │   └── Booking.js
-│   ├── routes/             # API routes
-│   │   ├── listings.js
-│   │   ├── auth.js
-│   │   ├── agents.js
-│   │   └── bookings.js
-│   ├── middleware/         # Custom middleware
-│   ├── utils/              # Helper functions
-│   ├── uploads/            # Image uploads
-│   ├── .env
-│   ├── index.js
-│   └── package.json
-└── README.md
-```
-
-## 🚀 Development Phases
-
-### Phase 1: Basic Listing Platform
-- [x] Project setup and structure
-- [ ] Enhanced listing model with location data
-- [ ] Search and filter functionality
-- [ ] Basic listing display with images
-- [ ] Contact forms
-
-### Phase 2: Location & Maps
-- [ ] Google Maps integration
-- [ ] Location-based search
-- [ ] Directions from user location
-- [ ] Map view of listings
-
-### Phase 3: User Authentication
-- [ ] User registration/login
-- [ ] JWT authentication
-- [ ] User dashboard
-- [ ] Saved favorites
-
-### Phase 4: Agent System
-- [ ] Agent registration and verification
-- [ ] Premium booking system
-- [ ] Payment integration (M-PESA)
-- [ ] Agent dashboard
-
-### Phase 5: Advanced Features
-- [ ] Reviews and ratings
-- [ ] SMS/Email notifications
-- [ ] Admin dashboard
-- [ ] Mobile app/PWA
+---
 
 ## 🛠️ Getting Started
 
 ### Prerequisites
 - Node.js (v16 or higher)
 - MongoDB
-- Google Maps API key
+- Google Maps API key (see below)
 
 ### Installation
 
@@ -140,28 +36,99 @@ rent-radar/
    ```bash
    # Frontend
    cd client && npm install
-   
    # Backend
    cd ../server && npm install
    ```
 
 3. **Environment setup**
-   ```bash
-   # In server directory, create .env file
+   - In `server/.env`:
+     ```env
    PORT=5000
    MONGODB_URI=mongodb://localhost:27017/rent-radar
    JWT_SECRET=your_jwt_secret
-   GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+     ```
+   - In `client/.env`:
+     ```env
+     VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
    ```
 
 4. **Start development servers**
    ```bash
    # Backend
    cd server && npm run dev
-   
    # Frontend (in new terminal)
    cd client && npm run dev
    ```
+
+---
+
+## ✨ Core Features
+- Smart search & filtering (location, budget, amenities)
+- Interactive map with listings, contributions, and landmarks
+- User authentication (JWT)
+- Agent registration & dashboard
+- Booking system
+- Favorites & profile management
+- Reviews & ratings
+- Notifications (in-app, email)
+- Admin dashboard (user/listing/contribution management, analytics)
+- CSV export for admin data
+- Responsive, modern UI
+
+---
+
+## 🔮 Planned & Future Features
+- Advanced notifications (push, email, in-app improvements)
+- M-PESA payment integration (full production flow)
+- Admin dashboard enhancements (analytics, moderation tools)
+- Gamification (badges, points, leaderboards)
+- Advanced map features (heatmaps, drawing, more filters)
+- Improved mobile UX/UI
+- User-to-user messaging
+- More granular search filters (amenities, neighborhoods, etc)
+- Multi-language support
+- Accessibility improvements
+- Real-time chat/support
+- More robust review and rating system
+- AI-powered recommendations
+- Virtual reality property tours
+- Blockchain-based rental agreements
+- Integration with utility companies
+- Community features and reviews
+
+> **Note:** Some features are in progress or will be updated in future releases. This list is evolving—contributions and ideas are welcome!
+
+---
+
+## 📁 Project Structure
+
+```
+rent-radar/
+├── client/                 # Frontend (React + Tailwind)
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── pages/          # Page components
+│   │   ├── services/       # API services
+│   │   ├── context/        # React context
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── tailwind.config.js
+│   ├── package.json
+│   └── vite.config.js
+├── server/                 # Backend (Express + MongoDB)
+│   ├── models/             # Database models
+│   ├── routes/             # API routes
+│   ├── middleware/         # Custom middleware
+│   ├── utils/              # Helper functions
+│   ├── uploads/            # Image uploads
+│   ├── .env
+│   ├── index.js
+│   └── package.json
+└── README.md
+```
+
+---
 
 ## 🎨 Features in Detail
 
@@ -190,23 +157,69 @@ rent-radar/
 - Detailed property reports
 - Negotiation assistance
 
+---
+
 ## 💰 Revenue Model
+- Freemium: Basic search free, premium features paid
+- Commission: Percentage from successful rentals
+- Agent Fees: Commission from local guides
+- Featured Listings: Promoted listings for landlords
+- Advertising: Property management companies
 
-1. **Freemium**: Basic search free, premium features paid
-2. **Commission**: Percentage from successful rentals
-3. **Agent Fees**: Commission from local guides
-4. **Featured Listings**: Promoted listings for landlords
-5. **Advertising**: Property management companies
+---
 
-## 🔮 Future Enhancements
-
-- Mobile app development
-- AI-powered recommendations
-- Virtual reality property tours
-- Blockchain-based rental agreements
-- Integration with utility companies
-- Community features and reviews
+## 📝 Notes
+- Some features are in progress or will be updated in future releases.
+- The feature list is evolving—feel free to suggest or contribute!
 
 ---
 
 **Built with ❤️ for the Kenyan rental market** 
+
+---
+
+## 📺 Live Demo / How It Works
+
+> Coming soon: A video walkthrough or live demo link will be added here to showcase the main features and user experience of RentRadar.
+
+---
+
+## 📸 Screenshots & Demo
+
+> **Video Walkthrough:** [Watch the demo](#) (Coming soon!)
+>
+> _Screenshots coming soon!_
+
+---
+
+## ❓ Why RentRadar?
+
+Finding a good house in Kenya is a real hustle—lots of toiling, wasted time, and uncertainty. RentRadar was built to make the process easier, safer, and smarter for everyone. No more endless searching, unreliable listings, or wasted trips. Just the right home, found fast.
+
+---
+
+## 🗺️ Roadmap
+
+- [x] Core search, listings, and map features
+- [x] User authentication and profiles
+- [x] Agent and booking system
+- [x] Reviews, ratings, and notifications
+- [x] Admin dashboard and analytics
+- [ ] M-PESA integration (coming soon)
+- [ ] Gamification and advanced notifications
+- [ ] Mobile app and more map features
+- [ ] ...and more! See the Planned & Future Features section above
+
+---
+
+## 🤝 Collaboration & Contact
+
+Interested in collaborating or contributing to make RentRadar even better? Reach out!
+
+- **Email:** njerifaith697@gmail.com
+- **WhatsApp:** +254769399819
+- **Telegram:** [@Nimblefawn](https://t.me/Nimblefawn) (ID: 6372116024)
+
+Feel free to contact me with ideas, feedback, or if you'd like to join the project as a developer, designer, or tester. All contributions and suggestions are welcome!
+
+--- 

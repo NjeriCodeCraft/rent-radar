@@ -40,3 +40,9 @@
 .read-the-docs {
   color: #888;
 }
+
+body, #root {
+  min-height: 100vh;
+  background: #F9FAFB;
+  font-family: 'ui-sans-serif', 'system-ui', sans-serif;
+}
