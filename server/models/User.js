@@ -136,7 +136,7 @@ userSchema.pre('save', function(next) {
 
 // Method to compare password
 userSchema.methods.comparePassword = async function(candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 
 // Method to get public profile (without sensitive data)
